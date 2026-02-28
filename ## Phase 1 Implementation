@@ -1,0 +1,54 @@
+Development Summary (Phase 1 – Recon Pipeline)
+
+PEST v1 was designed and implemented as a Kali-native reconnaissance automation framework focused on structured enumeration and report generation.
+
+Objectives Completed
+
+  Established modular project architecture separating execution, parsing, findings normalization, and reporting layers.
+  Implemented CLI-driven entry point (pest.py) for controlled workflow execution.
+
+  Developed a preflight validation module to:
+  Verify Nmap availability
+  Validate sudo execution
+  Create target-scoped output directories
+  Integrated automated Nmap reconnaissance module using:
+      SYN scanning (-sS)
+      Service detection (-sV)
+      Default script execution (-sC)
+      XML + text artifact generation
+
+Built XML parsing engine using xml.etree.ElementTree to extract open port and service data.
+Created structured JSON findings model for normalized attack surface representation.
+Implemented markdown-based reporting engine to generate human-readable recon summaries.
+
+Artifacts Generated Per Target
+
+  nmap.xml – Structured scan output
+  nmap.txt – Human-readable scan results
+  findings.json – Normalized attack surface data model
+  report.md – Report-ready recon summary
+
+Engineering Challenges Resolved
+
+Corrected Linux ownership and permission conflicts caused by initial root directory creation.
+Refactored project into user-space directory for proper development workflow.
+Diagnosed VMware networking segmentation after encountering “0 hosts up” condition during scanning.
+Implemented disciplined environment setup and artifact isolation practices.
+
+Current State:
+
+PEST v1 successfully performs:
+Automated reconnaissance
+Structured service extraction
+JSON findings generation
+Markdown report output
+
+**The framework is operational within authorized lab environments.**
+
+Next Enhancements (In Progress)
+
+Host reachability detection logic
+Improved scan-state reporting (e.g., unreachable vs. no open ports)
+Service tagging and risk classification framework
+HTTP enumeration module integration
+Reporting format enhancements

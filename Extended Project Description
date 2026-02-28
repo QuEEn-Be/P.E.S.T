@@ -1,0 +1,94 @@
+PEST (Portable Enumeration & Security Toolkit) 
+
+Was developed as a Kali-native reconnaissance automation framework intended to formalize and standardize the early phases of penetration testing engagements.
+The primary objective of PEST is not to replace existing offensive tools, but to enforce structured enumeration discipline, normalize attack surface data, and generate consistent reporting artifacts suitable for consulting-style documentation.
+Motivation.  In real-world penetration testing engagements, reconnaissance is often repetitive, inconsistent, and highly dependent on operator workflow. While tools such as Nmap provide powerful scanning capabilities, their outputs are frequently consumed manually or inconsistently documented.
+
+PEST was designed to address three core challenges:   
+
+      1. Standardizing reconnaissance execution.
+      2. Structuring scan results into normalized data models.
+      3. Automating report-ready artifact generation.
+
+This project emphasizes workflow consistency over exploit automation.
+
+System Architecture and Design Principles
+
+PEST follows a modular design model separating execution, parsing, normalization, and reporting concerns.
+
+1. Execution Layer
+
+The modules/nmap_scan.py component handles controlled invocation of Nmap using:
+    SYN scanning (-sS)
+    Service detection (-sV)
+    Default NSE scripts (-sC)
+    Explicit timing template (-T4)
+    XML + text output generation
+
+Execution is scoped per target, with artifacts isolated into dedicated output directories to prevent cross-contamination between assessments.
+
+2. Preflight Validation
+
+The core/preflight.py module ensures:
+    Required tooling availability
+    Sudo privilege validation
+    Controlled directory creation
+    Safe overwrite logic enforcement
+    This ensures predictable execution and reduces environmental inconsistencies.
+
+3. Parsing and Normalization Layer
+
+The XML parsing engine (core/parse_nmap.py) leverages Python’s built-in xml.etree. ElementTree to extract structured service data.
+Open ports are normalized into structured dictionaries, forming the canonical data model used by downstream components.
+JSON output (findings.json) serves as the authoritative representation of the target’s exposed attack surface.
+This separation allows future modules (e.g., service-aware chaining, enrichment, risk scoring) to operate independently of the scan execution logic.
+
+4. Reporting Engine
+
+The reporting module generates markdown-based reports derived directly from the structured JSON findings.
+
+This enforces a critical design principle that Data is canonical. Presentation is derived By decoupling data normalization from presentation logic, 
+PEST supports extensible reporting formats without modifying scan logic.
+
+Engineering Challenges and Lessons Learned
+
+During development, several real-world environment issues were encountered and resolved:
+    
+    Root-owned project structure causing permission conflicts.
+    Directory relocation into user-space to ensure sustainable development workflow.
+    VMware network segmentation resulting in “0 hosts up” scan states.
+    Reinforcement of least-privilege principles outside controlled scan execution.
+
+These challenges reinforced the importance of:
+    Environment validation
+    Artifact isolation
+    Network awareness during assessment workflows
+    Controlled privilege escalation only where necessary
+    Security and Ethical Boundaries
+
+PEST intentionally excludes:
+    Exploit automation
+    Credential harvesting
+    Vulnerability exploitation modules
+
+The framework is designed strictly for authorized lab environments and controlled assessment contexts. 
+Its purpose is reconnaissance discipline and structured artifact generation — not offensive weaponization.
+
+Current Capabilities
+# PEST v1 currently supports:
+    Automated reconnaissance execution  
+    XML-based service parsing
+    Structured JSON findings output
+    Markdown report generation
+    Modular architecture for future expansion
+    Strategic Direction
+
+Planned enhancements include:
+    Host availability state detection (distinguishing unreachable vs. no open ports)
+    Service-based tagging (e.g., SMB, HTTP, RDP, LDAP)
+    Risk classification placeholders
+    HTTP enumeration chaining
+    Severity scoring integration
+    Executive summary reporting templates
+
+Long term, PEST aims to serve as a personal offensive automation framework supporting repeatable, documented, and scalable reconnaissance practices.

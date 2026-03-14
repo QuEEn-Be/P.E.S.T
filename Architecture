@@ -1,0 +1,24 @@
+# PEST Architecture
+
+PEST is designed as a modular penetration testing framework that separates functionality into independent modules.
+
+The framework architecture follows a layered structure:
+
+Core Engine  
+Responsible for argument parsing, workflow orchestration, and module execution.
+
+Modules  
+Individual modules perform specific tasks such as reconnaissance, scanning, and exploitation.
+
+Output Layer  
+Results are collected and formatted for easy analysis.
+
+---
+
+## Planned Module Categories
+
+- reconnaissance
+- scanning
+- enumeration
+- exploitation
+- reporting

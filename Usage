@@ -1,0 +1,11 @@
+# Usage
+
+Example command:
+
+python pest.py -t 192.168.1.10 --recon
+
+Options:
+
+-t   Target host
+--recon   Perform reconnaissance
+--scan    Perform port scanning

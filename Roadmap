@@ -1,0 +1,19 @@
+# PEST Development Roadmap
+
+## Phase 1 – Core Framework
+- command line argument parsing
+- modular architecture
+- basic reconnaissance module
+
+## Phase 2 – Enumeration Modules
+- host discovery
+- port scanning
+- service identification
+
+## Phase 3 – Vulnerability Discovery
+- automated service checks
+- integration with external tools
+
+## Phase 4 – Reporting
+- structured output
+- report generation

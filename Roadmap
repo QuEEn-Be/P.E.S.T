@@ -1,6 +1,6 @@
 # PEST Development Roadmap
 
-## Phase 1 – Core Framework
+## Phase 1 – Implementation
 - command line argument parsing
 - modular architecture
 - basic reconnaissance module
